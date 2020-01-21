@@ -1,0 +1,3 @@
+jdbc:oracle:thin:@10.1.3.76:1521/PRD
+WEBSAP
+2INTER7
