@@ -103,9 +103,44 @@ video {
 
 
 			<div id="camdiv" align="center">
-				<video id="video" width="768" height="576" autoplay></video>
-				<br>
-				<button id="foto" style="background: #99FFD3;">Foto</button>
+
+				<table>
+					<tr>
+						<td><video id="video" width="768" height="576" autoplay></video></td>
+						<td style="padding: 30px">
+							<table style="height: 376px;width: 300px">
+								<tr>
+									<td>
+										<div id="tipFoto" class="labelOp">Fotografiati nr. auto</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<button id="foto"
+											style="background: #99FFD3; padding: 30px 75px;font-size: 25px;">Foto</button>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div id="nrAuto" class="nrAuto"></div>
+										<div id="nrBorderou" class="nrBorderou"></div>
+										<div id="sfarsitInc" class="result"></div>
+									</td>
+								</tr>
+							</table>
+
+
+						</td>
+
+
+					</tr>
+
+				</table>
+
+
+
+
+
 				<br>
 				<canvas id="canvas" width="768" height="576"></canvas>
 
@@ -161,7 +196,7 @@ video {
 
 		document.getElementById("foto").addEventListener("click", function() {
 			context.drawImage(video, 0, 0, 768, 576);
-			showSaveButton();
+			handleFotoButton();
 
 		});
 	</script>

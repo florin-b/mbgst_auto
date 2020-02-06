@@ -2,18 +2,29 @@ var userObj;
 var globalListArticole = [];
 var comandaCurenta;
 var nrBorderou;
+var tipFoto;
+var timeStampNumar;
+var timeStampMarfa;
 
 $(document).on('pageshow', '#incarc_masini', function() {
 
 	userObj = JSON.parse($('#userbean').text());
 
 	$('#canvas').hide();
+	tipFoto = 'NUMAR';
+
+	$('#nrAuto').text(" ");
+	$('#nrBorderou').text(" ");
 
 });
 
-function showSaveButton() {
-	scrollToBottom();
-	getNrAuto();
+function handleFotoButton() {
+	// scrollToBottom();
+
+	if (tipFoto == "NUMAR")
+		getNrAuto();
+	else if (tipFoto == "MARFA")
+		saveMarfa();
 
 }
 
@@ -84,37 +95,44 @@ function getNrAuto() {
 function checkResult(data) {
 	var masina = $.parseJSON(JSON.stringify(data));
 
+	$('#sfarsitInc').text('');
+	
 	if (masina.nrMasina === undefined) {
-		$("#nrAuto").css("color", "red");
-		$('#nrAuto').text('Acest numar auto nu poate fi recunoscut.');
-
-		scrollToBottom();
+		$('#nrAuto').text('Auto : nerecunoscut');
+		$('#nrBorderou').text('');
 		return;
 	}
 
 	if (masina.nrBorderou === undefined) {
-		$("#nrAuto").css("color", "red");
-		$('#nrAuto').text(
-				'Pentru masina ' + masina.nrMasina
-						+ ' nu exista un borderou alocat.');
-		scrollToBottom();
+		$('#nrAuto').text("Auto : " + masina.nrMasina);
+		$('#nrBorderou').text('Bord : nealocat');
 		return;
 	}
 
+	if (masina.statusText != '') {
+		$('#nrAuto').text("Auto : " + masina.nrMasina);
+		$('#nrBorderou').text('Bord : ' + masina.statusText);
+		return;
+	}
+
+	timeStampNumar = masina.dataOra;
+
 	nrBorderou = masina.nrBorderou;
 
-	var textSucces = 'Masina ' + masina.nrMasina + ' a fost incarcata la '
-			+ masina.dataOra;
+	$('#nrAuto').text("Auto : " + masina.nrMasina);
+	$('#nrBorderou').text("Bord : " + masina.nrBorderou);
+	$('#tipFoto').text("Fotografiati marfa");
+	
 
-	$("#nrAuto").css("color", "green");
-	$('#nrAuto').text(textSucces);
-	scrollToBottom();
+	tipFoto = 'MARFA';
 
+}
+
+function saveMarfa() {
 	var image = document.getElementById("canvas").toDataURL("image/png")
 			.replace("image/png", "image/octet-stream");
 
 	setSfarsitIncarcare(image);
-
 }
 
 function setSfarsitIncarcare(image) {
@@ -132,14 +150,15 @@ function setSfarsitIncarcare(image) {
 				loading('show');
 
 			},
-			complete : function() {
+			complete : function(data) {
 				loading('hide');
-
 				$('#canvas').hide();
 
 			},
 			success : function(data) {
 				$.mobile.loading('hide');
+				tipFoto = "NUMAR";
+				showSaveImgResult(data);
 			},
 			error : function(data) {
 				$.mobile.loading('hide');
@@ -151,6 +170,19 @@ function setSfarsitIncarcare(image) {
 	} catch (error) {
 		alert(error);
 	}
+
+}
+
+function showSaveImgResult(data) {
+
+	var info = $.parseJSON(JSON.stringify(data));
+
+	if (info.succes) {
+		timeStampMarfa = info.infoTime;
+		$('#sfarsitInc').text("Sf. inc : " + info.infoTime);
+		$('#tipFoto').text("Fotografiati nr. auto");
+	} else
+		$('#sfarsitInc').text('Eroare salvare date');
 
 }
 

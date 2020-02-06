@@ -1,0 +1,10 @@
+.pretTable {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.pretTable td, .pretTable th {
+	padding: 20px;
+	color: #056E4D;
+}

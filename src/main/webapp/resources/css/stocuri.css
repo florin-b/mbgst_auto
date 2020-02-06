@@ -1,0 +1,10 @@
+.stocTable {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.stocTable td, .stocTable th {
+	padding: 20px;
+	color: #056E4D;
+}

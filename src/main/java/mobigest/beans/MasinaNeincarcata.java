@@ -5,6 +5,7 @@ public class MasinaNeincarcata {
 	private String nrMasina;
 	private String nrBorderou;
 	private String dataOra;
+	private String statusText = "";
 
 	public MasinaNeincarcata() {
 
@@ -40,9 +41,18 @@ public class MasinaNeincarcata {
 		this.dataOra = dataOra;
 	}
 
+	public String getStatusText() {
+		return statusText;
+	}
+
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
+	}
+
 	@Override
 	public String toString() {
-		return "MasinaNeincarcata [nrMasina=" + nrMasina + ", nrBorderou=" + nrBorderou + "]";
+		return "MasinaNeincarcata [nrMasina=" + nrMasina + ", nrBorderou=" + nrBorderou + ", dataOra=" + dataOra
+				+ ", statusText=" + statusText + "]";
 	}
 
 }

@@ -1,0 +1,48 @@
+.stocArtTable {
+	font-family: "Lucida Console", Monaco, monospace;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.stocArtTable td, .stocArtTable th {
+	padding: 3px;
+	color: #900C3F;
+}
+
+.pretArtTable {
+	font-family: "Lucida Console", Monaco, monospace;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.pretArtTable td, .pretArtTable th {
+	padding: 3px;
+	color: #900C3F;
+}
+
+.articoleCreare {
+	font-family: "Lucida Console", Monaco, monospace;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.articoleCreare td {
+	padding: 4px;
+	color: #3D7850;
+}
+
+.clientDetTable {
+	font-family: "Lucida Console", Monaco, monospace;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.clientDetTable td, .clientDetTable th {
+	padding: 3px;
+	color: #900C3F;
+}
+
+.totalComanda {
+	font-family: "Lucida Console", Monaco, monospace;
+	color: #900C3F;
+}

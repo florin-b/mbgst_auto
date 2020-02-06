@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
+import mobigest.beans.Info;
 import mobigest.beans.MasinaNeincarcata;
 import mobigest.database.connection.DBManager;
 import mobigest.queries.articole.SqlQueries;
@@ -50,6 +51,11 @@ public class OperatiiMasini {
 
 				masina.setNrBorderou(rs.getString("numarb"));
 				masina.setNrMasina(rs.getString("masina").replace("-", "").replace(" ", "").trim().toUpperCase());
+				masina.setStatusText("");
+
+				if (rs.getString("numarb_ant") != null)
+					masina.setStatusText(rs.getString("numarb_ant") + " nefinalizat");
+
 				listMasini.add(masina);
 			}
 
@@ -80,11 +86,12 @@ public class OperatiiMasini {
 		}
 	}
 
-	public boolean saveSfarsitIncImg(String borderou, String img) throws FileNotFoundException {
+	public Info saveSfarsitIncImg(String borderou, String img) {
 
-		boolean succes = false;
+		Info info = new Info();
+		info.setInfoTime(DateUtils.getStrTimeStampRo());
 
-		try (Connection conn = new DBManager().getTestDataSource().getConnection();
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
 				PreparedStatement stmt = conn.prepareStatement(SqlQueries.setSfarsitIncImg())) {
 
 			InputStream istream = new ByteArrayInputStream(img.getBytes(StandardCharsets.UTF_8));
@@ -95,13 +102,14 @@ public class OperatiiMasini {
 
 			stmt.executeQuery();
 
-			succes = true;
+			info.setSucces(true);
 
 		} catch (SQLException e) {
 			logger.error(Utils.getStackTrace(e));
+			info.setSucces(false);
 		}
 
-		return succes;
+		return info;
 	}
 
 	public String getPlateNumber_old() {
@@ -171,7 +179,7 @@ public class OperatiiMasini {
 		MasinaNeincarcata masina = new MasinaNeincarcata();
 		String nrAuto = getNrAutoFromImg(codUser, filiala, plateImg);
 
-		masina.setDataOra(DateUtils.getStrTimeStampRo());
+		masina.setStatusText("");
 
 		if (!("-1").equals(nrAuto)) {
 
@@ -181,6 +189,7 @@ public class OperatiiMasini {
 			for (MasinaNeincarcata m : listMasini) {
 				if (m.getNrMasina().equalsIgnoreCase(nrAuto)) {
 					masina.setNrBorderou(m.getNrBorderou());
+					masina.setStatusText(m.getStatusText());
 					break;
 				}
 			}
@@ -191,6 +200,21 @@ public class OperatiiMasini {
 
 		return masina;
 
+	}
+
+	public Info trateazaSfarsitIncarcare(String document, String codSofer, String image) {
+		Info info = new Info();
+
+		boolean isIncarcare = new OperatiiMasini().setSfarsitIncarcare(document, codSofer);
+
+		if (isIncarcare)
+			info = new OperatiiMasini().saveSfarsitIncImg(document, image);
+		else {
+			info.setInfoTime(DateUtils.getStrTimeStampRo());
+			info.setSucces(false);
+		}
+
+		return info;
 	}
 
 }

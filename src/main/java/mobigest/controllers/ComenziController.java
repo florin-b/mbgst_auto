@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import mobigest.beans.Info;
 import mobigest.beans.MasinaNeincarcata;
-
 import mobigest.model.comenzi.OperatiiMasini;
 import mobigest.utils.Utils;
 
@@ -32,18 +32,15 @@ public class ComenziController {
 
 	@RequestMapping(value = "/setSfarsitIncarcare", method = RequestMethod.POST)
 	@ResponseBody
-	public void setSfarsitIncarcare(String document, String codSofer, String image) {
+	public Info setSfarsitIncarcare(String document, String codSofer, String image) {
 
-		try {
-
-			new OperatiiMasini().saveSfarsitIncImg(document, image);
-
-		} catch (Exception e) {
-
-			logger.error(Utils.getStackTrace(e));
-		}
+		return new OperatiiMasini().trateazaSfarsitIncarcare(document, codSofer, image);
+		
+		 //return new OperatiiMasini().saveSfarsitIncImg(document, image);
 
 		// new OperatiiMasini().setSfarsitIncarcare(document, codSofer);
+		
+		
 
 	}
 
