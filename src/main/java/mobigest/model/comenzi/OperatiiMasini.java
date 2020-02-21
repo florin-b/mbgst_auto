@@ -202,15 +202,18 @@ public class OperatiiMasini {
 
 	}
 
-	public Info trateazaSfarsitIncarcare(String document, String codSofer, String image) {
+	public Info trateazaSfarsitIncarcare(String document, String codSofer, String image1, String image2) {
 		Info info = new Info();
 
 		boolean isIncarcare = new OperatiiMasini().setSfarsitIncarcare(document, codSofer);
 
-		if (isIncarcare)
-			info = new OperatiiMasini().saveSfarsitIncImg(document, image);
-		else {
-			info.setInfoTime(DateUtils.getStrTimeStampRo());
+		if (isIncarcare) {
+			info = new OperatiiMasini().saveSfarsitIncImg(document, image1);
+
+			if (info.isSucces())
+				info = new OperatiiMasini().saveSfarsitIncImg(document, image2);
+		} else {
+			info.setInfoTime(DateUtils.getDateTime());
 			info.setSucces(false);
 		}
 

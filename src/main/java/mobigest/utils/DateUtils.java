@@ -1,5 +1,12 @@
 package mobigest.utils;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,10 +17,12 @@ import java.util.Locale;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class DateUtils {
-	
-	private static final Logger logger = LogManager.getLogger(DateUtils.class);
+import mobigest.database.connection.DBManager;
+import mobigest.queries.articole.SqlQueries;
 
+public class DateUtils {
+
+	private static final Logger logger = LogManager.getLogger(DateUtils.class);
 
 	public static String getCurrentDate() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -81,7 +90,8 @@ public class DateUtils {
 			while (cal.getTime().before(dateStop)) {
 				cal.add(Calendar.DATE, 1);
 
-				if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+				if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+						|| cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
 					return true;
 
 			}
@@ -228,11 +238,32 @@ public class DateUtils {
 
 	}
 
-	
 	public static String getStrTimeStampRo() {
 		return new SimpleDateFormat("dd-MM-yyyy HH:mm").format(Calendar.getInstance().getTime());
 
-	}	
-	
-	
+	}
+
+	public static String getDateTime() {
+
+		String dateTime = "";
+
+		try (Connection conn = new DBManager().getProdDataSource().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(SqlQueries.getDateTime())) {
+
+			stmt.executeQuery();
+
+			ResultSet rs = stmt.getResultSet();
+
+			while (rs.next()) {
+				dateTime = rs.getString("datetime");
+			}
+
+		} catch (SQLException e) {
+			logger.error(Utils.getStackTrace(e));
+
+		}
+
+		return dateTime;
+	}
+
 }

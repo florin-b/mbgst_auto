@@ -48,7 +48,7 @@
 				<form:input id="username" name="username" path="" />
 				<br>
 				<form:label path="username">Parola</form:label>
-				<form:password id="password" name="password" path="" />
+				<form:password id="password" name="password" path="" autocomplete="off"/>
 				<br>
 				<input type="submit" value="Login" />
 				<br>

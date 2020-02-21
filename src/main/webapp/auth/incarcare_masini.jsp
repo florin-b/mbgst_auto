@@ -102,29 +102,52 @@ video {
 
 
 
+
+
+
 			<div id="camdiv" align="center">
 
 				<table>
 					<tr>
-						<td><video id="video" width="768" height="576" autoplay></video></td>
-						<td style="padding: 30px">
-							<table style="height: 376px;width: 300px">
+						<td><video id="video" width="640" height="480" autoplay></video></td>
+						<td>
+							<table style="height: 500px; width: 280px">
 								<tr>
-									<td>
-										<div id="tipFoto" class="labelOp">Fotografiati nr. auto</div>
+									<td valign='top'>
+										<div id="divFoto">
+											<div>
+												<label for='fotoRadio' id='labelFoto'>Detectati nr.
+													auto automat</label> <input type="radio" name="getNrAuto"
+													id="fotoRadio" value="foto" checked
+													onclick="handleRadioClick(this);"></input> <label
+													for="listRadio" id='labelLista'>Selectati nr. auto
+													din lista</label> <input type="radio" name="getNrAuto"
+													id="listRadio" value="list"
+													onclick="handleRadioClick(this);" /><br>
+											</div>
+											<div id="divSelectMasini">
+												<select name="masini_select" id="masini_select"></select>
+											</div>
+
+										</div>
 									</td>
 								</tr>
 								<tr>
-									<td>
-										<button id="foto"
-											style="background: #99FFD3; padding: 30px 75px;font-size: 25px;">Foto</button>
-									</td>
+									<td><div>
+											<label id="textTipFoto"
+												style="font-size: 20px; color: #b8281c;">Fotografiati
+												nr. auto</label>
+											<button id="fotoBtn"
+												style="background: #99FFD3; padding: 15px 60px; font-size: 22px;">Foto</button>
+										</div></td>
 								</tr>
 								<tr>
-									<td>
-										<div id="nrAuto" class="nrAuto"></div>
-										<div id="nrBorderou" class="nrBorderou"></div>
-										<div id="sfarsitInc" class="result"></div>
+									<td valign='top'>
+										<div>
+											<div id="nrAuto" class="nrAuto"></div>
+											<div id="nrBorderou" class="nrBorderou"></div>
+											<div id="sfarsitInc" class="result"></div>
+										</div>
 									</td>
 								</tr>
 							</table>
@@ -133,6 +156,20 @@ video {
 						</td>
 
 
+					</tr>
+					<tr>
+						<td colspan=2 align="center" style='padding: 10px'>
+							<table>
+								<tr>
+									<td style='padding: 15px'>
+										<canvas id="canvas1" width="384" height="288"></canvas>
+									</td>
+									<td style='padding: 15px'>
+										<canvas id="canvas2" width="384" height="288"></canvas>
+									</td>
+								</tr>
+							</table>
+						</td>
 					</tr>
 
 				</table>
@@ -143,6 +180,11 @@ video {
 
 				<br>
 				<canvas id="canvas" width="768" height="576"></canvas>
+
+
+
+
+
 
 
 
@@ -183,7 +225,8 @@ video {
 		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 			navigator.mediaDevices.getUserMedia({
 				video : {
-					facingMode : "environment",
+					facingMode : "environment"
+					
 
 				}
 			}).then(function(stream) {
@@ -194,11 +237,11 @@ video {
 
 		}
 
-		document.getElementById("foto").addEventListener("click", function() {
-			context.drawImage(video, 0, 0, 768, 576);
-			handleFotoButton();
+		document.getElementById("fotoBtn").addEventListener("click",
+				function() {
+					handleFotoButton();
 
-		});
+				});
 	</script>
 
 

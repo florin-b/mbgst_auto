@@ -25,7 +25,8 @@ public class Utils {
 
 	public String getConnectionData() {
 
-		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("mobigest/resource/db_connect.txt");
+		InputStream inputStream = this.getClass().getClassLoader()
+				.getResourceAsStream("mobigest/resource/db_connect.txt");
 
 		StringBuilder result = new StringBuilder();
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -63,7 +64,19 @@ public class Utils {
 			logger.error(Utils.getStackTrace(e));
 		}
 
-		return plateNr;
+		return cleanNumber(plateNr);
 	}
+
+	private static String cleanNumber(String nrAuto) {
+
+		String antet = nrAuto.substring(0, 2).replace("1", "I").replace("0", "O");
+		String mid = nrAuto.substring(2, 4).replace("I", "1").replace("O", "0");
+		String rest = nrAuto.substring(4, 7).replace("1", "I").replace("0", "O");
+
+		return antet + mid + rest;
+	}
+	
+	
+
 
 }

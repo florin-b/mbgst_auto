@@ -32,15 +32,9 @@ public class ComenziController {
 
 	@RequestMapping(value = "/setSfarsitIncarcare", method = RequestMethod.POST)
 	@ResponseBody
-	public Info setSfarsitIncarcare(String document, String codSofer, String image) {
+	public Info setSfarsitIncarcare(String document, String codSofer, String image1, String image2) {
 
-		return new OperatiiMasini().trateazaSfarsitIncarcare(document, codSofer, image);
-		
-		 //return new OperatiiMasini().saveSfarsitIncImg(document, image);
-
-		// new OperatiiMasini().setSfarsitIncarcare(document, codSofer);
-		
-		
+		return new OperatiiMasini().trateazaSfarsitIncarcare(document, codSofer, image1, image2);
 
 	}
 
