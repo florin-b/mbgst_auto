@@ -32,54 +32,10 @@ public class DBManager {
 		return oracleDS;
 	}
 
-	public DataSource getProdDataSourceOld() {
 
-		String[] accesData = new Utils().getConnectionData().split("#");
 
-		OracleDataSource oracleDS = null;
-		try {
 
-			oracleDS = new OracleDataSource();
-			oracleDS.setURL(accesData[0]);
-			oracleDS.setUser(accesData[1]);
-			oracleDS.setPassword(accesData[2]);
 
-		} catch (Exception e) {
-			logger.error(Utils.getStackTrace(e));
-		}
-		return oracleDS;
-	}
 
-	public DataSource getTestDataSource() {
-
-		OracleDataSource oracleDS = null;
-		try {
-
-			oracleDS = new OracleDataSource();
-			oracleDS.setURL("jdbc:oracle:thin:@10.1.3.89:1527/TES");
-			oracleDS.setUser("WEBSAP");
-			oracleDS.setPassword("2INTER7");
-
-		} catch (Exception e) {
-			logger.error(Utils.getStackTrace(e));
-		}
-		return oracleDS;
-	}
-
-	public DataSource getProdDataSourceEnv() {
-
-		InitialContext initContext;
-		DataSource ds = null;
-		try {
-
-			initContext = new InitialContext();
-			Context envContext = (Context) initContext.lookup("java:/comp/env");
-			ds = (DataSource) envContext.lookup("jdbc/prod_db");
-
-		} catch (Exception e) {
-			logger.error(Utils.getStackTrace(e));
-		}
-		return ds;
-	}
 
 }
