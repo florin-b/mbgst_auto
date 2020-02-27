@@ -213,7 +213,7 @@ public class OperatiiMasini {
 			if (info.isSucces())
 				info = new OperatiiMasini().saveSfarsitIncImg(document, image2);
 		} else {
-			info.setInfoTime(DateUtils.getDateTime());
+			info.setInfoTime(DateUtils.getTimeStampUTC());
 			info.setSucces(false);
 		}
 

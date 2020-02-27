@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -240,6 +241,17 @@ public class DateUtils {
 
 	public static String getStrTimeStampRo() {
 		return new SimpleDateFormat("dd-MM-yyyy HH:mm").format(Calendar.getInstance().getTime());
+
+	}
+
+	public static String getTimeStampUTC() {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		TimeZone tz = TimeZone.getTimeZone("UTC");
+		tz.setRawOffset(7200000);
+		sdf.setTimeZone(tz);
+
+		return sdf.format(Calendar.getInstance().getTime());
 
 	}
 

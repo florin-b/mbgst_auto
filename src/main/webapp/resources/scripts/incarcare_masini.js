@@ -247,6 +247,7 @@ function afisNrAutoResult(data) {
 	if (masina.statusText != '') {
 		$('#nrAuto').text("Auto : " + masina.nrMasina);
 		$('#nrBorderou').text('Bord : ' + masina.statusText);
+		$('#fotoBtn').hide();
 		return;
 	}
 

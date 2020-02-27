@@ -5,27 +5,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Properties;
+import java.util.TimeZone;
 
 import mobigest.utils.DateUtils;
-import mobigest.utils.Utils;
 
 public class Test {
 
 	public static void main(String[] args) {
 
-		// new Utils().getConnectionData();
-
-		// new DBManager().getProdDataSource();
-
-		// new Utils().getConnectionData();
-
-		System.out.println("dd: " + DateUtils.getDateTime());
-		
-		
-		
-
-		// read();
+		System.out.println(DateUtils.getTimeStampUTC());
 
 	}
 
