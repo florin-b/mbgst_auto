@@ -26,8 +26,11 @@ public class SqlQueries {
 		sqlString.append(" from websap.borderouri b join sapprd.vttk k on b.numarb=k.tknum ");
 		sqlString.append(" left join websap.borderouri bant on bant.masina=b.masina and bant.sttrg>2 ");
 		sqlString.append(" where b.sttrg = 2 and k.mandt='900' AND k.tplst = :filiala and k.shtyp = '1110' ");
-		sqlString.append(" and not exists(select 1 from sapprd.zsfarsitinc where document = b.numarb) ");
+		sqlString.append(" and not exists(select 1 from sapprd.zsfarsitinc where document = b.numarb and ");
+		sqlString.append(" codsofer != (select cod_sofer from websap.borderouri where numarb=b.numarb)) ");
 		sqlString.append(" order by b.masina,b.data_e) where nrp=1 ");
+		
+		
 
 		return sqlString.toString();
 	}
